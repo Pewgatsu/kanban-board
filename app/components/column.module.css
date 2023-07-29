@@ -1,0 +1,51 @@
+.wrapper {
+  background-color: rgba(0, 0, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  padding-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.title {
+  font-size: 0.9rem;
+}
+
+.todoCount {
+  font-size: 0.8rem;
+}
+
+.content {
+  padding: 0.5rem 0;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+.iconWrapper {
+  background: none;
+  outline: none;
+  border: none;
+}
+
+.icon {
+  height: 2rem;
+  width: 2rem;
+  color: #22c55e;
+}
+
+.plusIcon:hover {
+  color: #16a34a;
+}

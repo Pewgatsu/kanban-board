@@ -1,0 +1,13 @@
+.boardWrapper {
+  margin-top: 3.5rem;
+  max-width: 70rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media screen and (width > 768px) {
+  .boardWrapper {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
