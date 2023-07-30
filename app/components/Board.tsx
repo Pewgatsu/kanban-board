@@ -6,18 +6,17 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
-
 import { useBoardStore } from "../../store/BoardStore";
 import Column from "./Column";
 import styles from "./board.module.css";
-import { start } from "repl";
 import { todo } from "node:test";
 
 function Board() {
-  const [board, getBoard, setBoardState] = useBoardStore((state) => [
+  const [board, getBoard, setBoardState, updateTodoInDB] = useBoardStore((state) => [
     state.board,
     state.getBoard,
     state.setBoardState,
+    state.updateTodoInDB
   ]);
 
   useEffect(() => {
@@ -63,6 +62,10 @@ function Board() {
 
     const [todoMoved] = newTodos.splice(source.index, 1);
 
+    /*
+    Understand the logic
+    */
+
     if (startCol.id === finishCol.id) {
       newTodos.splice(destination.index, 0, todoMoved);
       const newCol = {
@@ -90,6 +93,8 @@ function Board() {
         id: finishCol.id,
         todos: finishTodos,
       });
+
+      updateTodoInDB(todoMoved, finishCol.id);
 
       setBoardState({ ...board, columns: newColumns });
     }
