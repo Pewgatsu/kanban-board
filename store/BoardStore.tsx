@@ -15,15 +15,23 @@ export const useBoardStore = create<BoardState>((set) => ({
     columns: new Map<TypedColumn, Column>(),
   },
   getBoard: async () => {
-    const board = await getTodosGroupedByColumn();
-    set({ board });
+    try {
+      const board = await getTodosGroupedByColumn();
+      set({ board });
+    } catch (e) {
+      console.log(e);
+    }
   },
   setBoardState: (board) => set({ board }),
-  
-  updateTodoInDB: async(todo, columnId) => {
-    await setDoc(doc(db, 'todos', todo.id), {
-      title: todo.title,
-      status: columnId,
-    })
-  }
+
+  updateTodoInDB: async (todo, columnId) => {
+    try {
+      await setDoc(doc(db, "todos", todo.id), {
+        title: todo.title,
+        status: columnId,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  },
 }));
