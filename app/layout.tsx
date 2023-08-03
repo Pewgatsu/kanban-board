@@ -1,5 +1,6 @@
 import "./globals.css";
 import React from "react";
+import Modal from "./components/Modal";
 
 import { IBM_Plex_Mono } from "next/font/google";
 
@@ -21,7 +22,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={ibm.className}>{children}</body>
+      <body className={ibm.className}>
+        {children}
+        <Modal></Modal>
+      </body>
     </html>
   );
 }
