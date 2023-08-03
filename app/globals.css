@@ -20,6 +20,6 @@ svg {
 }
 
 main {
-  width: min(80ch, 100% - 4rem);
+  width: min(110ch, 100% - 6rem);
   margin-inline: auto;
 }
