@@ -23,9 +23,8 @@ function Header() {
               alt="Trello Logo"
               width={50}
               height={50}
-              className={styles.image}
             ></Image>
-            <h1 className={styles.title}>Trello</h1>
+            <span className="text-5xl text-gray-700">Trello</span>
           </div>
 
           <div className={styles.searchWrapper}>
