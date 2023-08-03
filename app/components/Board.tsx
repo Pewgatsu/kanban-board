@@ -151,8 +151,6 @@ function Board() {
         setBoardState({ ...board, columns: newColumns });
       }
     }
-
-    console.log(isVertical);
   };
 
   return (
