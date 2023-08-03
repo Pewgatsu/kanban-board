@@ -4,7 +4,7 @@ import React from "react";
 import { IBM_Plex_Mono } from "next/font/google";
 
 const ibm = IBM_Plex_Mono({
-  weight: "400",
+  weight: ["400", "700"],
   subsets: ["latin"],
   display: "swap",
 });
