@@ -1,9 +1,8 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   DragDropContext,
   Droppable,
-  Draggable,
   DropResult,
 } from "react-beautiful-dnd";
 import { useBoardStore } from "../../store/BoardStore";
@@ -11,6 +10,27 @@ import Column from "./Column";
 import styles from "./board.module.css";
 
 function Board() {
+
+  /*
+    Function to check if the size of the window is on mobile or not
+    If it's less than 768 (mobile), set the direction of the draggable to vertical. Otherwise, set it horizontal.
+  */
+  const [isVertical, setIsVertical] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsVertical(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const [board, getBoard, setBoardState, updateTodoInDB] = useBoardStore(
     (state) => [
       state.board,
@@ -131,12 +151,18 @@ function Board() {
         setBoardState({ ...board, columns: newColumns });
       }
     }
+
+    console.log(isVertical);
   };
 
   return (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="board" direction="horizontal" type="column">
+        <Droppable
+          droppableId="board"
+          direction={isVertical ? "vertical" : "horizontal"}
+          type="column"
+        >
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
               <div className={styles.boardWrapper}>
