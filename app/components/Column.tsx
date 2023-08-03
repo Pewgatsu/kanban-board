@@ -2,6 +2,7 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import styles from "./column.module.css";
 import TodoCard from "./TodoCard";
+import { useBoardStore } from "../../store/BoardStore";
 type Props = {
   id: TypedColumn;
   todos: Todo[];
@@ -17,6 +18,8 @@ const idToColumnText: {
 };
 
 function Column({ id, todos, index }: Props) {
+  const [searchString] = useBoardStore((state) => [state.searchString]);
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -34,28 +37,59 @@ function Column({ id, todos, index }: Props) {
               >
                 <h2 className={styles.header}>
                   <span className={styles.title}> {idToColumnText[id]}</span>
-                  <span className={styles.todoCount}>{todos.length}</span>
+                  <span className={styles.todoCount}>
+                    {/*
+
+                    Shows the number of the todo items that matches the search string in each column
+                    If it's empty, just show the number of todos otherwise, match it with the query.
+                    */}
+                    {!searchString
+                      ? todos.length
+                      : todos.filter((todo) =>
+                          todo.title
+                            .toLowerCase()
+                            .includes(searchString.toLowerCase())
+                        ).length}
+                  </span>
                 </h2>
 
                 <div className={styles.content}>
-                  {todos.map((todo, index) => (
-                    <Draggable
-                      key={todo.id}
-                      draggableId={todo.id}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <TodoCard
-                          todo={todo}
-                          index={index}
-                          id={id}
-                          innerRef={provided.innerRef}
-                          draggableProps={provided.draggableProps}
-                          dragHandleProps={provided.dragHandleProps}
-                        ></TodoCard>
-                      )}
-                    </Draggable>
-                  ))}
+
+
+                  {/*
+                    If there is an input on the search string, the screen renders the todo items based on the query,
+
+                    If there is a search string and it doesn't match any title on the todo items, return null
+                    Otherwise, display the items that matches the query.
+                  
+                  */}
+                  {todos.map((todo, index) => {
+                    if (
+                      searchString &&
+                      !todo.title
+                        .toLowerCase()
+                        .includes(searchString.toLowerCase())
+                    )
+                      return null;
+                    return (
+                      <Draggable
+                        key={todo.id}
+                        draggableId={todo.id}
+                        index={index}
+                      >
+                        {(provided) => (
+                          <TodoCard
+                            todo={todo}
+                            index={index}
+                            id={id}
+                            innerRef={provided.innerRef}
+                            draggableProps={provided.draggableProps}
+                            dragHandleProps={provided.dragHandleProps}
+                          ></TodoCard>
+                        )}
+                      </Draggable>
+                    );
+                  })}
 
                   {provided.placeholder}
                   <div className={styles.iconContainer}>

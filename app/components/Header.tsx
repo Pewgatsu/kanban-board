@@ -5,10 +5,14 @@ import logo from "./trello-plain.svg";
 import styles from "./header.module.css";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Avatar from "react-avatar";
-import { useEffect } from "react";
-import getTodosGroupedByColumn from "../lib/getTodosGroupedByColumn";
+import { useBoardStore } from "../../store/BoardStore";
 
 function Header() {
+  const [searchString, setSearchString] = useBoardStore((state) => [
+    state.searchString,
+    state.setSearchString,
+  ]);
+
   return (
     <>
       <header className={styles.header}>
@@ -34,6 +38,8 @@ function Header() {
                 className={styles.searchbox}
                 placeholder="Search"
                 type="text"
+                value={searchString}
+                onChange={(e) => setSearchString(e.target.value)}
               />
               <button type="submit" hidden></button>
             </form>
