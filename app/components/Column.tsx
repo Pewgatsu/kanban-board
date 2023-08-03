@@ -3,6 +3,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import styles from "./column.module.css";
 import TodoCard from "./TodoCard";
 import { useBoardStore } from "../../store/BoardStore";
+import { useModalStore } from "../../store/ModalStore";
 type Props = {
   id: TypedColumn;
   todos: Todo[];
@@ -19,6 +20,7 @@ const idToColumnText: {
 
 function Column({ id, todos, index }: Props) {
   const [searchString] = useBoardStore((state) => [state.searchString]);
+  const openModal = useModalStore( (state) => state.openModal);
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -93,7 +95,7 @@ function Column({ id, todos, index }: Props) {
 
                   {provided.placeholder}
                   <div className={styles.iconContainer}>
-                    <button className={styles.iconWrapper}>
+                    <button className={styles.iconWrapper} onClick={openModal}>
                       <PlusCircleIcon className={styles.icon}></PlusCircleIcon>
                     </button>
                   </div>
